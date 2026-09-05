@@ -12,18 +12,18 @@ Copy and paste this directly in your X DM thread with Pratham:
 ```text
 Hey Pratham,
 
-Took a look at your Retail Intelligence platform (dwlabs.org/retail-intelligence) and built a functional, on-prem prototype of the shelf analysis system matching your exact 4-move pipeline (Capture → Detect → Score → Act).
+Took a look at your Retail Intelligence platform (dwlabs.org/retail-intelligence) and built an end-to-end prototype matching your exact 4-move pipeline (Capture → Detect → Score → Act) with a dual-mode engine: an on-prem edge CV engine and a multimodal VLM (gpt-5.4-mini) for complex real-world supermarket scenes.
 
 Key Architecture Highlights:
-1. On-Prem CV Engine: Horizontal shelf row segmentation (Top, Eye-Level, Reach, Bottom), product facing bounding boxes, Out-of-Stock (OOS) void detection, and shelf lip price tag OCR running locally on CPU in ~91ms with zero data egress.
-2. POS Correlation & Revenue at Risk: Correlates visual shelf facings with POS sales velocity to compute real-time Revenue at Risk ($/day), Share of Shelf (SoS), and Eye-Level Efficiency waste.
-3. The Store, Prioritized (Agentic Ops): Generates a morning worklist ranked by revenue recovery (P0 restock alerts, P1 price mismatch audits, P2 planogram rebalancing swaps) with 1-click audit export.
-4. Real Evals & Benchmarks: Built an evaluation suite measuring against annotated ground truth: 93.8% mAP@0.50, 95.5% OOS Void Recall (catch rate), and <100ms P95 latency, along with an On-Prem vs Cloud Multimodal VLM tradeoff breakdown.
+1. Dual Vision Engine: Sub-100ms on-prem edge CV for planar cooler shelves (zero cloud egress) + gpt-5.4-mini Multimodal VLM that accurately detects shelf tiers, commercial brand logos, and empty out-of-stock gaps on complex supermarket aisles (cereal, deodorants, wide store angles).
+2. POS Correlation & Financial Scoring: Correlates detected facings with POS sales velocity to compute real-time Revenue at Risk ($/day), Share of Shelf (SoS), and Eye-Level Efficiency waste.
+3. "The Store, Prioritized" (Agentic Ops): Autonomous morning executive brief + action worklist ranked by recoverable revenue (P0 urgent restocks, P1 price tag audits, P2 planogram rebalances).
+4. Real Ground-Truth Evals: Automated benchmarking suite measuring against annotated ground truth: 93.8% mAP@0.50, 95.5% OOS Void Recall (catch rate), and ~91ms P50 latency.
 
-Packaged with FastAPI, an interactive canvas dashboard, Docker, and full pytest coverage.
+Packaged with your Deepwork Labs editorial UI upfront, an interactive testing lab for custom smartphone uploads, and live MCP server support.
 
-Live Demo: [INSERT YOUR DEPLOYED URL HERE]
-Code & Evals: [INSERT YOUR GITHUB REPO URL HERE]
+Live Demo: https://huggingface.co/spaces/kprsnt/retail-shelf-intelligence
+Code & Evals: https://github.com/kprsnt2/retail_shelf_intelligence
 
 Happy to jump on a quick call and walk you through the system.
 ```
