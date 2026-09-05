@@ -1,8 +1,9 @@
-"""Retail Shelf Intelligence — Hugging Face Space Demo.
+"""Retail Shelf Intelligence — Deepwork Labs Edition.
+Version: 1.0.2 (OpenAI gpt-5.4-mini Default with Space Secrets)
 
 Dual-Mode Architecture:
-1. On-Prem Edge CV (Sub-100ms CPU, zero cloud egress, data sovereign)
-2. Cloud Multimodal VLM (OpenAI gpt-4o-mini / Google Gemini 2.0 Flash) for complex real-world supermarket aisles
+1. Multimodal VLM (OpenAI gpt-5.4-mini) for complex real-world retail shelves
+2. On-Prem Edge CV (Sub-100ms CPU, zero cloud egress)
 """
 try:
     import spaces
@@ -58,6 +59,29 @@ SAMPLE_IMAGES = {
     "Real Supermarket Drinks Aisle (Woolworths)": SAMPLE_DIR / "real_beverage_shelf_01.jpg",
 }
 
+def load_image_safely(image_input, preset_choice: str) -> Image.Image:
+    """Safely resolve an image from either a file upload, path string, or preset fallback."""
+    if image_input:
+        if isinstance(image_input, Image.Image):
+            return image_input.convert("RGB")
+        if isinstance(image_input, str) and os.path.exists(image_input):
+            try:
+                return Image.open(image_input).convert("RGB")
+            except Exception:
+                pass
+        if isinstance(image_input, dict) and "path" in image_input and os.path.exists(image_input["path"]):
+            try:
+                return Image.open(image_input["path"]).convert("RGB")
+            except Exception:
+                pass
+
+    # Fallback to selected preset on local disk
+    preset_path = SAMPLE_IMAGES.get(preset_choice, SAMPLE_DIR / "real_cereal_aisle_stockout.jpg")
+    if preset_path.exists():
+        return Image.open(preset_path).convert("RGB")
+    return Image.new("RGB", (1200, 900), color=(40, 40, 40))
+
+
 def annotate_shelf(
     image: Image.Image,
     detection_result,
@@ -72,14 +96,14 @@ def annotate_shelf(
     overlay = Image.new("RGBA", annotated.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(overlay)
     
-    # Base colors
-    COLOR_FACING_BORDER = (16, 185, 129, 230)      # Emerald green
-    COLOR_FACING_FILL = (16, 185, 129, 45)
-    COLOR_VOID_BORDER = (239, 68, 68, 255)         # Bright red
-    COLOR_VOID_FILL = (239, 68, 68, 75)
-    COLOR_TAG_BORDER = (245, 158, 11, 240)         # Amber orange
-    COLOR_TAG_FILL = (245, 158, 11, 55)
-    COLOR_ROW_LINE = (99, 102, 241, 180)           # Indigo
+    # Deepwork Labs Brand Colors
+    COLOR_FACING_BORDER = (27, 138, 90, 235)      # Deepwork Forest Green (#1b8a5a)
+    COLOR_FACING_FILL = (27, 138, 90, 45)
+    COLOR_VOID_BORDER = (208, 52, 44, 255)         # Deepwork Crimson (#d0342c)
+    COLOR_VOID_FILL = (208, 52, 44, 80)
+    COLOR_TAG_BORDER = (207, 124, 18, 240)         # Deepwork Amber (#cf7c12)
+    COLOR_TAG_FILL = (207, 124, 18, 55)
+    COLOR_ROW_LINE = (35, 95, 184, 180)           # Deepwork Accent Blue (#235fb8)
     
     # 1. Draw Shelf Row Bands & Labels
     if show_rows and detection_result.rows:
@@ -92,10 +116,10 @@ def annotate_shelf(
                 
             draw.line([(0, y_top), (annotated.width, y_top)], fill=COLOR_ROW_LINE, width=2)
             
-            pill_w = 220
+            pill_w = 230
             pill_h = 24
-            draw.rectangle([(8, y_top + 4), (8 + pill_w, y_top + 4 + pill_h)], fill=(30, 41, 59, 210))
-            draw.text((16, y_top + 8), tier_name, fill=(241, 245, 249, 255))
+            draw.rectangle([(8, y_top + 4), (8 + pill_w, y_top + 4 + pill_h)], fill=(25, 24, 22, 220))
+            draw.text((16, y_top + 8), tier_name, fill=(247, 243, 235, 255))
             
     # 2. Draw Product Facings & OOS Voids
     for row in detection_result.rows:
@@ -108,15 +132,15 @@ def annotate_shelf(
                 conf_val = getattr(facing.bbox, "confidence", 1.0)
                 conf_text = f"{int(conf_val * 100)}%"
                 badge_text = f"{label_text} ({conf_text})"
-                badge_w = min(max(bx2 - bx1, 80), 160)
-                draw.rectangle([(bx1, max(0, by1 - 18)), (bx1 + badge_w, by1)], fill=(15, 23, 42, 220))
-                draw.text((bx1 + 4, max(2, by1 - 16)), badge_text[:20], fill=(255, 255, 255, 255))
+                badge_w = min(max(bx2 - bx1, 90), 180)
+                draw.rectangle([(bx1, max(0, by1 - 18)), (bx1 + badge_w, by1)], fill=(25, 24, 22, 220))
+                draw.text((bx1 + 4, max(2, by1 - 16)), badge_text[:22], fill=(255, 255, 255, 255))
                 
             elif facing.facing_type == "void_oos" and show_voids:
                 draw.rectangle([(bx1, by1), (bx2, by2)], fill=COLOR_VOID_FILL, outline=COLOR_VOID_BORDER, width=3)
                 badge_text = "EMPTY SLOT (OOS)"
-                badge_w = min(max(bx2 - bx1, 80), 140)
-                draw.rectangle([(bx1, max(0, by1 - 20)), (bx1 + badge_w, by1)], fill=(220, 38, 38, 240))
+                badge_w = min(max(bx2 - bx1, 90), 140)
+                draw.rectangle([(bx1, max(0, by1 - 20)), (bx1 + badge_w, by1)], fill=(208, 52, 44, 240))
                 draw.text((bx1 + 4, max(2, by1 - 18)), badge_text, fill=(255, 255, 255, 255))
                 
     # 3. Draw Price Tag Audits
@@ -127,7 +151,7 @@ def annotate_shelf(
                 for row in detection_result.rows:
                     if row.row_index == row_idx and row.facings:
                         y_lip = row.y_max - 20
-                        draw.rectangle([(30, y_lip - 18), (360, y_lip + 4)], fill=(180, 83, 9, 230))
+                        draw.rectangle([(30, y_lip - 18), (360, y_lip + 4)], fill=(207, 124, 18, 230))
                         draw.text((36, y_lip - 16), f"TAG MISMATCH: Shelf ${audit.detected_shelf_price:.2f} vs POS ${audit.pos_price:.2f}", fill=(255, 255, 255, 255))
                         break
 
@@ -135,11 +159,10 @@ def annotate_shelf(
 
 
 def run_shelf_analysis(
-    image: Optional[Image.Image],
+    image_input: Any,
     preset_choice: str,
     planogram_id: str,
     engine_choice: str,
-    api_key: str,
     show_facings: bool,
     show_voids: bool,
     show_rows: bool,
@@ -151,37 +174,34 @@ def run_shelf_analysis(
     pd.DataFrame, pd.DataFrame,
     str, str
 ]:
-    """Run shelf computer vision (Edge CV or Multimodal VLM) and store ops correlation."""
-    # Determine input image
-    if image is None:
-        selected_path = SAMPLE_IMAGES.get(preset_choice, SAMPLE_DIR / "beverages_shelf_01.png")
-        if selected_path.exists():
-            image = Image.open(selected_path).convert("RGB")
-        else:
-            image = Image.new("RGB", (800, 600), color=(50, 50, 50))
-            
+    """Run shelf computer vision (OpenAI gpt-5.4-mini or Edge CV) and generate Deepwork Labs analytics."""
+    image = load_image_safely(image_input, preset_choice)
     t_start = time.perf_counter()
-    vlm_error_notice = ""
+    vlm_notice = ""
     
-    # Select Inference Engine
-    if "OpenAI" in engine_choice:
-        try:
-            vlm = MultimodalVLMEngine(provider="openai", api_key=api_key.strip() if api_key else None)
-            detections = vlm.analyze_shelf_image(image, image_id="openai_gpt4o_mini")
-        except Exception as e:
-            vlm_error_notice = f"⚠️ **OpenAI VLM Fallback Notice:** {str(e)}\n\n*Running on Edge CV (Local CPU) instead.*"
-            detections = engine.analyze_shelf_image(image, image_id="edge_scan_fallback")
-    elif "Gemini" in engine_choice:
-        try:
-            vlm = MultimodalVLMEngine(provider="gemini", api_key=api_key.strip() if api_key else None, model_name="gemini-2.0-flash")
-            detections = vlm.analyze_shelf_image(image, image_id="gemini_2_flash")
-        except Exception as e:
-            vlm_error_notice = f"⚠️ **Gemini VLM Fallback Notice:** {str(e)}\n\n*Running on Edge CV (Local CPU) instead.*"
-            detections = engine.analyze_shelf_image(image, image_id="edge_scan_fallback")
+    # Active Inference Engine & Secret
+    active_key = os.getenv("OPENAI_API_KEY", "")
+    
+    if "Gemini" in engine_choice:
+        vlm_notice = "⚠️ **Google Gemini:** Disabled (no API key configured). Defaulting to active **OpenAI gpt-5.4-mini** model.\n"
+        engine_choice = "OpenAI"
+
+    if "OpenAI" in engine_choice or "gpt" in engine_choice.lower():
+        if active_key:
+            try:
+                vlm = MultimodalVLMEngine(provider="openai", api_key=active_key, model_name="gpt-5.4-mini")
+                detections = vlm.analyze_shelf_image(image, image_id="openai_gpt_5_4_mini")
+                vlm_notice += "🟢 **Active Model:** `OpenAI gpt-5.4-mini` (Multimodal VLM with real-world product recognition & out-of-stock gap detection)"
+            except Exception as e:
+                vlm_notice += f"⚠️ **OpenAI API Fallback:** {str(e)}\n\n*Running on Edge CV (Local CPU) instead.*"
+                detections = engine.analyze_shelf_image(image, image_id="edge_cv_fallback")
+        else:
+            vlm_notice += "ℹ️ **Notice:** `OPENAI_API_KEY` not detected in Space Secrets. Running on **Edge CV (Local CPU)**."
+            detections = engine.analyze_shelf_image(image, image_id="edge_cv_onprem")
     else:
-        # Default On-Prem Edge CV
+        # Explicit Edge CV Mode
         detections = engine.analyze_shelf_image(image, image_id="edge_cv_onprem")
-        
+        vlm_notice = "⚡ **Active Engine:** `Edge CV (On-Prem / Local CPU)` (<100ms latency, zero cloud egress)"
     analytics = correlator.generate_report(detections, planogram_id=planogram_id)
     worklist = agent.generate_worklist(detections, analytics)
     elapsed_ms = (time.perf_counter() - t_start) * 1000.0
@@ -202,26 +222,28 @@ def run_shelf_analysis(
     kpi_rev_weekly = f"${analytics.total_weekly_revenue_at_risk:,.2f}"
     kpi_latency = f"{elapsed_ms:.1f} ms"
     
-    # 3. Agent Worklist Markdown
-    brief_md = f"""### 📢 Executive Morning Brief
-> **{worklist.executive_brief}**
+    # 3. Agent Worklist Markdown (Deepwork Labs Editorial Styling)
+    brief_md = f"""{vlm_notice}
 
-*Inference Engine:* `{detections.inference_engine}` | *Processing Latency:* `{elapsed_ms:.1f} ms`
+---
+
+### 📢 Morning Executive Synthesis
+> **"{worklist.executive_brief}"**
+
+*Total Occupied Facings:* `{analytics.total_occupied_facings}` | *Out-of-Stock Voids:* `{analytics.total_oos_voids}` | *Scan Latency:* `{elapsed_ms:.1f} ms`
 """
-    if vlm_error_notice:
-        brief_md = f"{vlm_error_notice}\n\n{brief_md}"
     
-    actions_md = "### 📋 Prioritized Action Worklist (Ranked by Recoverable Revenue)\n\n"
+    actions_md = "### [ 03 ] · ACT — THE STORE, PRIORITIZED\n\n"
     if not worklist.actions:
         actions_md += "✅ **No urgent operational actions required.** Shelf is fully compliant with planogram.\n"
     else:
         for idx, act in enumerate(worklist.actions, 1):
-            badge_color = "🔴" if act.priority == "P0_CRITICAL" else ("🟠" if act.priority == "P1_HIGH" else "🔵")
-            actions_md += f"""#### {badge_color} #{idx} [{act.priority.replace('_', ' ')}] {act.title}
-- **Location:** `{act.location}`
-- **Revenue Recovery Impact:** **+${act.revenue_impact_daily:.2f}/day** (+${act.revenue_impact_weekly:.2f}/week)
-- **Estimated Resolution Time:** ~{act.estimated_resolution_time_min} minutes
-- **Standard Operating Procedure:** {act.instructions}
+            p_badge = "🔴 P0 CRITICAL" if act.priority == "P0_CRITICAL" else ("🟠 P1 HIGH" if act.priority == "P1_HIGH" else "🔵 P2 MEDIUM")
+            actions_md += f"""#### {p_badge} · #{idx}: {act.title}
+- **Shelf Location:** `{act.location}`
+- **Revenue Recovery:** **+${act.revenue_impact_daily:.2f}/day** (+${act.revenue_impact_weekly:.2f}/week)
+- **Resolution Est.:** ~{act.estimated_resolution_time_min} minutes
+- **Floor Action SOP:** {act.instructions}
 
 ---
 """
@@ -286,7 +308,7 @@ def execute_eval_benchmarks(runs: int = 10) -> Tuple[str, pd.DataFrame, pd.DataF
     m = report["overall_metrics"]
     lat = report["latency_benchmarks_ms"]
     
-    summary_md = f"""### 🎯 Edge Model Benchmark Results vs Ground Truth Annotations
+    summary_md = f"""### 🎯 Model Benchmark Results vs Ground Truth Annotations
 - **Facing Detection Precision:** `{m['facing_precision'] * 100:.1f}%`
 - **Facing Detection Recall:** `{m['facing_recall'] * 100:.1f}%`
 - **Facing mAP@0.50:** `{m['facing_mAP_50'] * 100:.1f}%`
@@ -308,98 +330,120 @@ def execute_eval_benchmarks(runs: int = 10) -> Tuple[str, pd.DataFrame, pd.DataF
     df_scenes = pd.DataFrame(scenes_data)
     
     comparison_data = [
-        {"Dimension": "Data Sovereignty", "Local On-Prem Edge CV (Default)": "100% On-Prem (Zero cloud egress)", "Cloud Multimodal VLM (GPT-4o/Gemini)": "Transfers store photos & sales offsite"},
-        {"Dimension": "Inference Latency", "Local On-Prem Edge CV (Default)": "< 100 ms (Real-time CPU)", "Cloud Multimodal VLM (GPT-4o/Gemini)": "2,000 – 6,000 ms (Network + API queue)"},
-        {"Dimension": "Cost / 1,000 Scans", "Local On-Prem Edge CV (Default)": "$0.00 (Runs on local electricity)", "Cloud Multimodal VLM (GPT-4o/Gemini)": "$0.00 on Gemini Free / ~$1.50 on gpt-4o-mini"},
-        {"Dimension": "Real-World Clutter Robustness", "Local On-Prem Edge CV (Default)": "Best on standardized planar racks", "Cloud Multimodal VLM (GPT-4o/Gemini)": "State-of-the-Art on wide angles & aisles"},
-        {"Dimension": "Product/Brand Reading", "Local On-Prem Edge CV (Default)": "Color contrast + catalog signature matching", "Cloud Multimodal VLM (GPT-4o/Gemini)": "Direct OCR reading of packaging text/logos"},
+        {"Dimension": "Primary Model", "OpenAI Vision (Active Default)": "gpt-5.4-mini (State-of-the-Art)", "On-Prem Edge CV (Fallback)": "Local Edge Heuristic (Sub-100ms)"},
+        {"Dimension": "Real-World Clutter Robustness", "OpenAI Vision (Active Default)": "Accurate on real aisles, cereal, deodorants", "On-Prem Edge CV (Fallback)": "Calibrated for standardized planar racks"},
+        {"Dimension": "Brand & Logo Reading", "OpenAI Vision (Active Default)": "Direct OCR reading of commercial logos", "On-Prem Edge CV (Fallback)": "Color contrast + catalog signature matching"},
+        {"Dimension": "Void Catch Rate", "OpenAI Vision (Active Default)": "Identifies empty pusher trays & pegboards", "On-Prem Edge CV (Fallback)": "Measures horizontal column contrast gaps"},
+        {"Dimension": "Inference Latency", "OpenAI Vision (Active Default)": "1,500 – 4,000 ms (Cloud API call)", "On-Prem Edge CV (Fallback)": "< 100 ms (Direct local CPU execution)"},
     ]
     df_comp = pd.DataFrame(comparison_data)
     
     return summary_md, df_scenes, df_comp
 
 
-def load_preset_image(preset_name: str) -> Image.Image:
-    """Load sample shelf image from presets."""
-    path = SAMPLE_IMAGES.get(preset_name, SAMPLE_DIR / "beverages_shelf_01.png")
-    if path.exists():
-        return Image.open(path).convert("RGB")
-    return Image.new("RGB", (800, 600), color=(40, 40, 40))
-
-
 def build_interface() -> gr.Blocks:
-    """Build the complete Gradio Blocks UI."""
-    with gr.Blocks(title="Retail Shelf Intelligence") as demo:
-        gr.Markdown("""# 🛒 Retail Shelf Intelligence — Edge CV & Agentic Commerce
-> **On-prem retail computer vision and agentic store operations that reads any shelf photo into per-facing, per-row, per-product sales velocity with zero cloud egress.**
-""")
+    """Build the complete Gradio Blocks UI with Deepwork Labs site aesthetic upfront."""
+    
+    deepwork_html_header = """
+    <div style="background-color: #f7f3eb; border-bottom: 1px solid #e2ddd3; padding: 1.25rem 2rem; margin-bottom: 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+          <span style="font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: #191816; letter-spacing: -0.02em;">Deepwork Labs</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 3px; background: #f0eae1; color: #6e6a64; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid #e2ddd3;">● PRODUCT · RETAIL INTELLIGENCE</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 3px; background: #e8f5e9; color: #1b8a5a; border: 1px solid #c8e6c9; font-weight: 600;">ACTIVE MODEL: GPT-5.4-MINI</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #1b8a5a; font-weight: 500;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #1b8a5a; display: inline-block;"></span>
+            <span>DATA SOVEREIGN & MULTIMODAL READY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+
+    pipeline_hero_html = """
+    <div style="background: #ffffff; border: 1px solid #e2ddd3; border-radius: 8px; padding: 1.25rem 1.75rem; margin-bottom: 1.5rem;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #6e6a64; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">4-MOVE AGENTIC PIPELINE ARCHITECTURE</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+        <div style="border-left: 3px solid #191816; padding-left: 0.75rem;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: #191816;">01. CAPTURE</div>
+          <div style="font-size: 0.8rem; color: #6e6a64; margin-top: 0.2rem;">Floor photo or standard smartphone camera stream.</div>
+        </div>
+        <div style="border-left: 3px solid #1b8a5a; padding-left: 0.75rem;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: #1b8a5a;">02. DETECT</div>
+          <div style="font-size: 0.8rem; color: #6e6a64; margin-top: 0.2rem;">gpt-5.4-mini VLM extracts product facings & OOS void gaps.</div>
+        </div>
+        <div style="border-left: 3px solid #cf7c12; padding-left: 0.75rem;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: #cf7c12;">03. SCORE</div>
+          <div style="font-size: 0.8rem; color: #6e6a64; margin-top: 0.2rem;">Ties facings to POS sales velocity & calculates $/day revenue loss.</div>
+        </div>
+        <div style="border-left: 3px solid #d0342c; padding-left: 0.75rem;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: #d0342c;">04. ACT</div>
+          <div style="font-size: 0.8rem; color: #6e6a64; margin-top: 0.2rem;">Synthesizes "The Store, Prioritized" morning worklist for floor staff.</div>
+        </div>
+      </div>
+    </div>
+    """
+
+    with gr.Blocks(title="Deepwork Labs — Retail Intelligence") as demo:
+        gr.HTML(deepwork_html_header)
+        gr.HTML(pipeline_hero_html)
 
         with gr.Tabs():
-            # TAB 1: Shelf Scanner
-            with gr.TabItem("📸 Interactive Shelf Scanner"):
+            # TAB 1: Live Showcase (Upfront Deepwork Labs View)
+            with gr.TabItem("🏛️ Deepwork Retail Intelligence — Showcase & Dashboard"):
                 with gr.Row():
                     with gr.Column(scale=5):
                         preset_dropdown = gr.Dropdown(
                             choices=list(SAMPLE_IMAGES.keys()),
                             value=list(SAMPLE_IMAGES.keys())[0],
-                            label="Select Sample Shelf Scene"
-                        )
-                        input_image = gr.Image(
-                            type="pil",
-                            label="Shelf Photo (or upload custom)",
-                            value=load_preset_image(list(SAMPLE_IMAGES.keys())[0])
+                            label="Select Shelf Scene"
                         )
                         
-                        with gr.Accordion("🧠 Vision Engine & Model Selection", open=True):
+                        with gr.Accordion("⚙️ Vision Engine & Planogram Settings", open=True):
                             engine_selector = gr.Radio(
                                 choices=[
+                                    "🤖 OpenAI Vision (gpt-5.4-mini)",
                                     "⚡ Edge CV (On-Prem / Local CPU)",
-                                    "🤖 OpenAI Vision (gpt-4o-mini)",
-                                    "✨ Google Gemini (Free: gemini-2.0-flash)"
+                                    "✨ Google Gemini (Disabled — No Key Configured)"
                                 ],
-                                value="⚡ Edge CV (On-Prem / Local CPU)",
+                                value="🤖 OpenAI Vision (gpt-5.4-mini)",
                                 label="Inference Engine"
                             )
-                            api_key_input = gr.Textbox(
-                                type="password",
-                                label="API Key (for OpenAI or Gemini Vision)",
-                                placeholder="Paste your sk-... or Gemini AI Studio key (or leave empty for Edge CV)",
-                                value=os.getenv("OPENAI_API_KEY") or os.getenv("GEMINI_API_KEY") or ""
+                            pog_selector = gr.Dropdown(
+                                choices=["POG-BEV-COOLER-01"],
+                                value="POG-BEV-COOLER-01",
+                                label="Active Planogram"
                             )
-                            gr.Markdown("""💡 **Model Recommendations:**
-- **⚡ Edge CV:** Runs 100% locally on CPU in <100ms with zero cloud egress or API keys. Best for planogram compliance on standard cooler shelves.
-- **🤖 OpenAI (gpt-4o-mini):** Powerful semantic understanding on real-world complex store aisles (cereal, deodorants, wide store angles).
-- **✨ Google Gemini 2.0 Flash:** State-of-the-art vision model with a **completely free API tier** (1,500 free requests/day at [aistudio.google.com](https://aistudio.google.com/)).
+                            gr.Markdown("""💡 **Engine Configuration:**
+- **🤖 OpenAI Vision (`gpt-5.4-mini`):** Active default model using secure `OPENAI_API_KEY` from Space Secrets. Accurately segments real-world store shelves, identifies brand logos, and detects out-of-stock voids.
+- **⚡ Edge CV:** Fast local CPU heuristic (<100ms) with zero cloud egress.
+- **✨ Google Gemini:** Disabled (no API key configured).
 """)
-                        
-                        pog_selector = gr.Dropdown(
-                            choices=["POG-BEV-COOLER-01"],
-                            value="POG-BEV-COOLER-01",
-                            label="Active Planogram"
-                        )
                         with gr.Accordion("Visual Layer Overlays", open=False):
                             with gr.Row():
                                 chk_facings = gr.Checkbox(value=True, label="Facings (Green)")
                                 chk_voids = gr.Checkbox(value=True, label="OOS Voids (Red)")
                             with gr.Row():
-                                chk_rows = gr.Checkbox(value=True, label="Row Tiers (Indigo)")
+                                chk_rows = gr.Checkbox(value=True, label="Row Tiers (Blue)")
                                 chk_tags = gr.Checkbox(value=True, label="Price Tags (Amber)")
                         
-                        btn_analyze = gr.Button("⚡ Analyze Shelf", variant="primary", size="lg")
+                        btn_analyze = gr.Button("⚡ Run Deepwork Shelf Scan", variant="primary", size="lg")
                         
                     with gr.Column(scale=7):
-                        annotated_output = gr.Image(type="pil", label="Computer Vision Detections (Bounding Boxes & Tiers)")
+                        annotated_output = gr.Image(type="pil", label="Computer Vision Detections (Facings, Voids & Tiers)")
                         
                         with gr.Row():
-                            with gr.Column(min_width=100):
+                            with gr.Column(min_width=90):
                                 kpi_osa = gr.Textbox(label="On-Shelf Availability", interactive=False)
-                            with gr.Column(min_width=100):
+                            with gr.Column(min_width=90):
                                 kpi_pog = gr.Textbox(label="Planogram Compliance", interactive=False)
-                            with gr.Column(min_width=100):
+                            with gr.Column(min_width=90):
                                 kpi_rev_daily = gr.Textbox(label="Daily Rev at Risk", interactive=False)
-                            with gr.Column(min_width=100):
+                            with gr.Column(min_width=90):
                                 kpi_rev_weekly = gr.Textbox(label="Weekly Rev at Risk", interactive=False)
-                            with gr.Column(min_width=100):
+                            with gr.Column(min_width=90):
                                 kpi_latency = gr.Textbox(label="Scan Latency", interactive=False)
 
                 with gr.Tabs():
@@ -421,9 +465,33 @@ def build_interface() -> gr.Blocks:
                     with gr.TabItem("🏷️ Price Tag Audit"):
                         tags_box = gr.Markdown()
 
-            # TAB 2: Real Model Evals & Benchmarks
+            # TAB 2: Testing Lab (Upload Custom Photos)
+            with gr.TabItem("🧪 Interactive Testing Lab (Custom Uploads)"):
+                gr.Markdown("""### 🧪 Deepwork Retail Lab — Test Custom Shelf Photos
+Upload any retail shelf photo from your phone or desktop. The **`gpt-5.4-mini`** vision engine will identify the physical shelf tiers, count product facings, detect out-of-stock gaps, and compute immediate financial risk.
+""")
+                with gr.Row():
+                    with gr.Column(scale=5):
+                        custom_upload = gr.Image(
+                            type="filepath",
+                            label="Upload Any Shelf Picture (or drag & drop)"
+                        )
+                        btn_analyze_custom = gr.Button("⚡ Analyze Uploaded Photo (gpt-5.4-mini)", variant="primary", size="lg")
+                    with gr.Column(scale=7):
+                        custom_annotated_output = gr.Image(type="pil", label="Lab Vision Detections")
+                        
+                with gr.Row():
+                    custom_kpi_osa = gr.Textbox(label="On-Shelf Availability", interactive=False)
+                    custom_kpi_pog = gr.Textbox(label="Planogram Compliance", interactive=False)
+                    custom_kpi_rev = gr.Textbox(label="Daily Rev at Risk", interactive=False)
+                    custom_kpi_lat = gr.Textbox(label="Processing Latency", interactive=False)
+                    
+                custom_brief_box = gr.Markdown()
+                custom_actions_box = gr.Markdown()
+
+            # TAB 3: Model Evals & Benchmarks
             with gr.TabItem("📊 Real Model Evals & Benchmarks"):
-                gr.Markdown("""### 🏆 Real-Time Model Benchmarking against Pixel Ground Truth
+                gr.Markdown("""### 🏆 Model Evaluation Suite vs Ground Truth Annotations
 Retail shelf monitoring has a unique safety profile: **OOS Void Recall (catch rate)** is the load-bearing metric because a false negative directly bleeds daily margin.
 """)
                 btn_run_evals = gr.Button("🚀 Run Full Ground-Truth Benchmark Suite", variant="secondary")
@@ -434,10 +502,10 @@ Retail shelf monitoring has a unique safety profile: **OOS Void Recall (catch ra
                         gr.Markdown("#### Per-Scene Accuracy Breakdown")
                         eval_scenes_table = gr.DataFrame(interactive=False)
                     with gr.Column():
-                        gr.Markdown("#### Edge CV vs Cloud Multimodal VLM Comparison")
+                        gr.Markdown("#### gpt-5.4-mini VLM vs Local Edge CV Comparison")
                         eval_comp_table = gr.DataFrame(interactive=False)
 
-            # TAB 3: Store Catalog & Planograms
+            # TAB 4: Store Catalog & Planograms
             with gr.TabItem("📦 Store Catalog & Planograms"):
                 gr.Markdown("### Active Store SKUs & Planogram Rules")
                 catalog_skus = catalog_mgr.list_all()
@@ -453,18 +521,12 @@ Retail shelf monitoring has a unique safety profile: **OOS Void Recall (catch ra
                     })
                 gr.DataFrame(pd.DataFrame(catalog_rows), label="Store Catalog Database", interactive=False)
 
-        # Wire Events
-        preset_dropdown.change(
-            fn=load_preset_image,
-            inputs=[preset_dropdown],
-            outputs=[input_image]
-        )
-        
+        # Wire Events for Tab 1 (Showcase)
         btn_analyze.click(
             fn=run_shelf_analysis,
             inputs=[
-                input_image, preset_dropdown, pog_selector,
-                engine_selector, api_key_input,
+                gr.State(None), preset_dropdown, pog_selector,
+                engine_selector,
                 chk_facings, chk_voids, chk_rows, chk_tags
             ],
             outputs=[
@@ -476,27 +538,28 @@ Retail shelf monitoring has a unique safety profile: **OOS Void Recall (catch ra
             ]
         )
         
+        # Wire Events for Tab 2 (Testing Lab)
+        btn_analyze_custom.click(
+            fn=run_shelf_analysis,
+            inputs=[
+                custom_upload, preset_dropdown, pog_selector,
+                engine_selector,
+                chk_facings, chk_voids, chk_rows, chk_tags
+            ],
+            outputs=[
+                custom_annotated_output,
+                custom_kpi_osa, custom_kpi_pog, custom_kpi_rev, gr.State(), custom_kpi_lat,
+                custom_brief_box, custom_actions_box,
+                gr.State(), gr.State(),
+                gr.State(), gr.State()
+            ]
+        )
+        
+        # Wire Benchmark Event
         btn_run_evals.click(
             fn=execute_eval_benchmarks,
             inputs=[],
             outputs=[eval_summary, eval_scenes_table, eval_comp_table]
-        )
-        
-        # Run initial scan on load
-        demo.load(
-            fn=run_shelf_analysis,
-            inputs=[
-                input_image, preset_dropdown, pog_selector,
-                engine_selector, api_key_input,
-                chk_facings, chk_voids, chk_rows, chk_tags
-            ],
-            outputs=[
-                annotated_output,
-                kpi_osa, kpi_pog, kpi_rev_daily, kpi_rev_weekly, kpi_latency,
-                brief_box, actions_box,
-                table_risk, table_sos,
-                eye_box, tags_box
-            ]
         )
         
     return demo

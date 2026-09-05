@@ -180,3 +180,4 @@ retail-shelf-intelligence/
 - Portfolio: [kprsnt.in](https://kprsnt.in)  
 - GitHub: [github.com/kprsnt2](https://github.com/kprsnt2)
 - X / Twitter: [@prashanth_29](https://x.com/prashanth_29)
+<!-- Last updated: 2026-09-05 Deepwork Labs Edition -->

@@ -180,5 +180,74 @@ uv run python -m retail_shelf.evals.runner
 # 3. Start the application locally
 uv run uvicorn retail_shelf.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-
 Then visit: **`http://localhost:8000`**
+
+---
+
+## 🚀 6. Real-World Evolution: From Toy Heuristics to OpenAI VLM (`gpt-5.4-mini`)
+### 🔍 The Real-World Stress Test
+When tested against real-world retail store photos (placed in `real_pics/`):
+- **`real_cereal_aisle_stockout.jpg` (`half_shelf2.jpg`):** A 5-tier breakfast cereal aisle (Chex, Cheerios, Quaker Life) with massive out-of-stock voids (35–40% bare shelf on Tier 4).
+- **`real_deodorant_shelf.png` (`half_shelf.png`):** A 4-tier personal care display with an empty pusher tray void on Shelf 3.
+- **`real_dairy_yogurt_7tier.jpg` (`half_shelf3.jpg`):** A dense 7-tier dairy, yogurt, and plant-milk display.
+- **`real_speedway_cooler.jpg`:** A wide-angle convenience store beverage cooler with ceiling lights and wall signs.
+
+---
+
+### ⚠️ Why the Baseline Data Was Frozen (Root Cause Analysis)
+In the initial version, every real photo produced the exact same frozen metrics:
+- **On-Shelf Availability (OSA):** `100.0%`
+- **Planogram Compliance:** `15.4%`
+- **Daily Revenue at Risk:** `$718.56`
+
+#### The Technical Root Cause:
+1. **Hardcoded Background Threshold:**
+   ```python
+   # In facing_detector.py
+   is_foreground = (gray_slice < 215)
+   ```
+   The toy heuristic assumed a sterile synthetic cooler with a bright white back wall (`gray ~ 235`). In real stores, the background behind products is dark grey metal, pegboard, or shadow (`gray ~ 40–70`). As a result, `is_foreground` evaluated to `True` across the **entire shelf width**.
+2. **Zero Voids Detected:**
+   The detector treated the whole shelf as one solid block of products and carved it into 8 contiguous dummy facings with **0 px gap** between them. Because gap was 0, `OOSVoidDetector` detected **0 voids**.
+3. **Frozen Formulas:**
+   $$\text{OSA} = \frac{32 \text{ occupied}}{32 \text{ occupied} + 0 \text{ voids}} = 100.0\%$$
+   $$\text{Daily Rev Loss vs POG-BEV-COOLER-01} = \$718.56 \text{ (exact same dummy miss every time)}$$
+4. **Ceiling Hallucination:**
+   On wide-angle photos (Speedway), the naive segmenter divided the entire image height into 4 equal bands, placing Row 0 and Row 1 on the **ceiling lights and wall banners**.
+
+---
+
+### 🧠 The Architectural Cutover to `gpt-5.4-mini`
+To achieve production-grade accuracy on real supermarket scenes, we integrated **OpenAI's `gpt-5.4-mini`** via `src/retail_shelf/cv/vlm_engine.py`:
+1. **Semantic Scene Understanding:**
+   - Dynamically locates physical shelving racks, ignoring ceiling fixtures, lights, and floor aisles.
+   - Adapts to arbitrary tier counts (4 shelves, 5 shelves on cereal, 7 shelves on dairy).
+   - Reads actual commercial packaging text and logos (*Chex*, *Cheerios*, *Old Spice*, *Axe*, *Siggi's*, *Almond Breeze*).
+   - Directly pinpoints true out-of-stock gaps where products have been cleared out.
+2. **Zero-Friction Downstream Coupling:**
+   - Bounding boxes and labels returned by `gpt-5.4-mini` are automatically mapped into the system's `ShelfDetectionResult` schema (`RowSegment`, `Facing`, `BoundingBox`).
+   - They feed directly into the **POS Correlation Engine** and the **Store Operations Prioritizer**, calculating genuine revenue-at-risk and generating actionable floor restock worklists.
+
+---
+
+### ⚖️ Why Gemini Was Omitted in Favor of OpenAI
+- Both OpenAI (`gpt-5.4-mini`) and Google Gemini were evaluated.
+- The user confirmed active use of OpenAI (`gpt-5.4-mini`) and provided the key via Hugging Face Space secrets.
+- Supporting secondary providers introduced unnecessary configuration friction without additive value once `gpt-5.4-mini` was active.
+- Therefore, the system was streamlined around **OpenAI `gpt-5.4-mini`** as the primary production engine, with local Edge CV maintained as an offline fallback.
+
+---
+
+### 🏛️ Deepwork Labs Editorial UI Redesign
+The user interface was redesigned to mirror the aesthetic of **Deepwork Labs** (`dwlabs.org/retail-intelligence`):
+1. **Showcase Dashboard Upfront:**
+   - Warm editorial paper background (`#f7f3eb`), Newsreader serif titles, JetBrains Mono status badges.
+   - Visual representation of the **4-Move Agentic Architecture** (`Capture` → `Detect` → `Score` → `Act`).
+   - Live telemetry cards: On-Shelf Availability, Planogram Compliance, Daily/Weekly Revenue at Risk, and Scan Latency.
+   - Visual shelf viewer with layer toggles (Facings, Voids, Row Tiers, Price Tags).
+   - Prioritized store action cards with P0/P1/P2 recovery tags and step-by-step resolution SOPs.
+2. **Interactive Testing Lab:**
+   - Drag-and-drop or upload ANY shelf photo taken from a smartphone or downloaded from the web.
+   - Powered by `gpt-5.4-mini` using the configured `OPENAI_API_KEY` secret.
+3. **Resilience & Bug Fixes:**
+   - Resolved Gradio 6 temporary WebP caching error (`FileNotFoundError: /tmp/gradio/...`) by implementing safe file path resolution (`load_image_safely`).

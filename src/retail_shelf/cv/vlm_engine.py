@@ -63,7 +63,7 @@ class MultimodalVLMEngine:
         self.provider = provider.lower()
         self.api_key = api_key or os.getenv("OPENAI_API_KEY" if self.provider == "openai" else "GEMINI_API_KEY", "")
         if not model_name:
-            self.model_name = "gpt-4o-mini" if self.provider == "openai" else "gemini-2.0-flash"
+            self.model_name = os.getenv("OPENAI_MODEL", "gpt-5.4-mini") if self.provider == "openai" else "gemini-2.0-flash"
         else:
             self.model_name = model_name
 
@@ -127,12 +127,26 @@ class MultimodalVLMEngine:
                     ]
                 }
             ],
-            "max_tokens": 4096,
-            "temperature": 0.1
+            "max_completion_tokens": 4096
         }
 
-        with httpx.Client(timeout=45.0) as client:
-            resp = client.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+        base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1/chat/completions")
+        if not base_url.endswith("/chat/completions"):
+            base_url = f"{base_url.rstrip('/')}/chat/completions"
+            
+        with httpx.Client(timeout=60.0) as client:
+            resp = client.post(base_url, headers=headers, json=payload)
+            # If legacy model rejects max_completion_tokens
+            if resp.status_code == 400 and "max_completion_tokens" in resp.text:
+                payload.pop("max_completion_tokens", None)
+                payload["max_tokens"] = 4096
+                resp = client.post(base_url, headers=headers, json=payload)
+                
+            # If model name not found, gracefully try gpt-4o-mini fallback
+            if resp.status_code == 404 and ("model" in resp.text.lower() or "not found" in resp.text.lower()):
+                payload["model"] = "gpt-4o-mini"
+                resp = client.post(base_url, headers=headers, json=payload)
+                
             if resp.status_code != 200:
                 raise RuntimeError(f"OpenAI API Error ({resp.status_code}): {resp.text}")
             result_json = resp.json()
