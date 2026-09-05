@@ -1,26 +1,34 @@
 ---
 title: "Building Retail Shelf Intelligence: How We Engineered an On-Prem Edge CV & Multimodal VLM Pipeline for Real-World Supermarket Aisles"
-date: "September 2026"
+date: "05 September 2026"
 category: "Computer Vision & AI"
-tags: "Computer Vision, OpenAI, GPT-5.4-mini, Hugging Face, Python, FastAPI, Retail AI"
-excerpt: "How a prototype for Deepwork Labs' 4-move retail pipeline evolved from a fragile on-prem heuristic that drew bounding boxes on ceiling lights into an industrial dual-mode engine powered by OpenAI gpt-5.4-mini."
+tags: "Computer Vision, Gemini 3.8 Flash, OMP, OpenAI, GPT-5.4-mini, Hugging Face, Python, FastAPI, Retail AI"
+excerpt: "How a 1.5-hour build sprint with Gemini 3.8 Flash on OMP evolved a broken heuristic that drew boxes on ceiling lights into a production dual-mode vision engine on Hugging Face Spaces."
 ---
 
-*Co-authored & Optimized by OpenAI GPT-5.4-mini*
+*Built by Prashanth K with Google Gemini 3.8 Flash via OMP (Oh My Pi)*
 
 > **A Technical Case Study & Engineering Journey**  
-> *How what started as a lightweight on-prem computer vision prototype for Deepwork Labs (`dwlabs.org/retail-intelligence`) collapsed under the messy reality of wide-angle supermarket photos, forcing a complete architectural evolution into a dual-mode system powered by OpenAI `gpt-5.4-mini`, Hugging Face ZeroGPU, and Model Context Protocol (MCP).*
+> *How what started as an on-prem computer vision prototype for Deepwork Labs (`dwlabs.org/retail-intelligence`) collapsed under the messy reality of wide-angle supermarket photos, and how a high-velocity 1.5-hour engineering sprint with Gemini 3.8 Flash on OMP (Oh My Pi) transformed it into an industrial dual-mode engine powered by OpenAI `gpt-5.4-mini`, Hugging Face ZeroGPU, and Model Context Protocol (MCP).*
 
 ---
 
-## 1. Executive Summary & The Retail Blind Spot
+## 1. Executive Summary: The 1.5-Hour "Steroids" Sprint
 
-In physical grocery retail, store execution has traditionally been a multi-billion dollar blind spot. Point of Sale (POS) scanner data tells retailers exactly *what* sold, but it cannot tell them:
-- When a product is physically out-of-stock on the shelf while sitting forgotten in the backroom.
-- When planogram compliance collapses, and slow-moving items usurp prime eye-level slots.
-- When shelf price labels mismatch the POS database, silently leaking retail margin or violating compliance regulations.
+Building software in 2026 with modern agentic harnesses is a completely different sport. This entire project—from diagnosing a catastrophic computer vision failure, integrating a modern vision-language model, debugging breaking platform API errors, pushing through Hugging Face ZeroGPU build failures, and overhauling the frontend into an editorial luxury design—was completed in **under 1.5 hours**. 
 
-Built as an architectural prototype for **Deepwork Labs** (`dwlabs.org/retail-intelligence`), this system implements their exact **4-Move Pipeline** (`Capture` → `Detect` → `Score` → `Act`), reading any retail shelf photograph into per-facing, per-row, per-product sales velocity and actionable floor replenishment orders.
+Paired with **Google Gemini 3.8 Flash** running inside the **OMP (Oh My Pi)** coding harness, the iteration loop felt like being on engineering steroids:
+- Zero context switching between terminal, editor, and browser.
+- Instant root-cause discovery across dense numerical NumPy arrays and raw HTTP error streams.
+- Live, zero-downtime deployment directly to Hugging Face Spaces.
+
+### The Problem: Physical Retail's Multi-Billion Dollar Blind Spot
+In grocery retail, Point of Sale (POS) scanner data tells retailers what sold, but it is blind to floor reality:
+- **Phantom Inventory**: Products sit forgotten in backroom pallets while the shelf sits bare, silently leaking daily sales.
+- **Planogram Collapse**: High-velocity revenue drivers get relegated to bottom shelves while slow-moving SKUs usurp prime eye-level slots.
+- **Price Tag Discrepancies**: Physical shelf lip tags mismatch the active POS database, violating retail compliance and bleeding margin.
+
+Built as an architectural prototype for **Deepwork Labs** (`dwlabs.org/retail-intelligence`), this system implements their exact **4-Move Pipeline** (`Capture` → `Detect` → `Score` → `Act`), reading shelf photos into per-facing, per-row, per-product sales velocity and prioritized floor restock worklists.
 
 ```
 ┌─────────────────┐       ┌──────────────────────────────┐       ┌─────────────────────────────┐       ┌─────────────────────────────┐
@@ -44,61 +52,55 @@ Built as an architectural prototype for **Deepwork Labs** (`dwlabs.org/retail-in
 
 ---
 
-## 2. Phase 1: The On-Premises Edge Vision Engine
+## 2. Phase 1: The Sterile Lab Prototype & The Initial Architecture
 
-When we first architected the system, on-premise local inference was the non-negotiable core constraint:
-1. **100% Data Sovereignty**: Store camera feeds and proprietary inventory scans never egress to external third-party clouds.
-2. **Sub-100ms CPU Inference**: Near instantaneous visual auditing on standard store edge hardware without requiring dedicated multi-thousand-dollar GPUs.
-3. **Offline Resilience**: Full operational reliability during supermarket network outages or bandwidth throttling.
-4. **Zero Marginal Inference Cost**: $0.00 cloud API fees per 1,000 scans, running entirely on store electricity.
+Our initial mandate was strictly on-premise edge computing:
+1. **100% Data Sovereignty**: Store video feeds and inventory photos never leave the local store network.
+2. **Sub-100ms CPU Inference**: Near-instantaneous visual auditing on cheap store hardware without requiring high-end GPUs.
+3. **Offline Resilience**: Complete independence from retail ISP outages.
+4. **Zero Marginal Inference Cost**: $0.00 cloud token fees per scan.
 
-### The Pure Python & NumPy Vision Stack
-We built four self-contained computer vision modules using PIL, NumPy, and Pydantic:
+### The Pure Python & NumPy Stack
+We built four self-contained modules:
+- **`row_segmenter.py`**: Horizontal gradient energy projection (`dy = np.abs(np.diff(img_gray, axis=0))`) slicing the image into retail tiers (`Top`, `Eye-Level [PRIME]`, `Reach`, `Bottom`).
+- **`facing_detector.py`**: Vertical column contrast profiling to group merchandise clusters, carving them into facings and matching catalog SKUs via Euclidean distance between mean RGB and brand signatures.
+- **`oos_detector.py`**: Horizontal gap measurement finding empty spaces between adjacent facings.
+- **`tag_reader.py`**: Auditing physical price labels against POS databases.
 
-- **Row Segmenter (`row_segmenter.py`)**: Uses horizontal contrast derivative energy projection (`dy = np.abs(np.diff(img_gray, axis=0))`) across the center width of the shelf to identify physical shelf lips and divide the display into merchandising tiers (`Top`, `Eye-Level [PRIME]`, `Reach`, `Bottom`).
-- **Facing Detector (`facing_detector.py`)**: Computes vertical column profiles to isolate foreground merchandise clusters, subdividing wide blocks into individual packaging facings and classifying them against catalog SKUs using Euclidean color signature matching.
-- **OOS Void Detector (`oos_detector.py`)**: Measures horizontal spatial gaps between adjacent product facings and frame boundaries to detect empty slots (`void_oos`).
-- **Shelf Tag Reader (`tag_reader.py`)**: Scans shelf lip channels to flag price mismatches between physical tags and the active POS pricing table.
-
-### Synthetic Benchmarks: Perfect on Paper
-On synthetic beverage cooler benchmark scenes (`beverages_shelf_01.png`, etc.), the pipeline performed with flying colors:
+### Synthetic Benchmark Numbers (The Trap)
+On synthetic benchmark scenes (`beverages_shelf_01.png`), the pipeline scored remarkably:
 - **Facing Precision**: `100.0%`
 - **Facing Recall**: `88.3%`
 - **Facing mAP@0.50**: `93.8%`
 - **OOS Void Recall (Stockout Catch Rate)**: `95.5%`
 - **Latency (Local CPU)**: **P50: 91.6 ms**
 
-We packaged it with FastAPI, wrote unit tests, and assumed the computer vision challenge was solved. 
-
-Then we introduced real supermarket photos.
+We packaged it with FastAPI, wrote unit tests, and thought we were done. Then we loaded real photos.
 
 ---
 
-## 3. "We Thought It Was Working" — The Real-World Failure & The Frozen Metrics Mystery
+## 3. The Collapse: Real Supermarket Photos & The Frozen Metrics Mystery
 
 ### The Real-World Test Photos
-We collected real-world retail store photographs to stress-test the pipeline:
-1. **`real_cereal_aisle_stockout.jpg`**: A 5-tier breakfast cereal aisle featuring Cheerios, Chex, and Quaker Life, with a massive out-of-stock void (35% to 40% bare shelf) on Tier 4.
-2. **`real_deodorant_shelf.png`**: A 4-tier personal care display with an empty pusher tray void on Shelf 3.
-3. **`real_dairy_yogurt_7tier.jpg`**: A dense 7-tier refrigerated dairy, yogurt, and plant-milk display.
-4. **`real_speedway_cooler.jpg`**: A wide-angle convenience store photograph showing beverage cooler doors in the background, with ceiling lights, wall banners, and floor aisles in the foreground.
+We loaded real-world store photographs into `real_pics/`:
+1. **`real_cereal_aisle_stockout.jpg`**: A 5-tier breakfast cereal aisle (Chex, Cheerios, Quaker Life) with a massive 35–40% empty shelf void on Tier 4.
+2. **`real_deodorant_shelf.png`**: A 4-tier personal care display with a completely bare pusher tray on Shelf 3.
+3. **`real_dairy_yogurt_7tier.jpg`**: A dense 7-tier refrigerated yogurt and plant-milk display.
+4. **`real_speedway_cooler.jpg`**: A wide-angle convenience store photo with cooler doors in the background, plus ceiling lights, signage, and floor aisles.
 
-### The Catastrophic Failure Mode
-When we ran the pipeline on these real pictures, the user immediately spotted a glaring issue:
-> *"Whatever image we gave, the result was the same. Why is this data never changing?"*
-
-Across every real-world image, the dashboard displayed identical numbers:
-- **On-Shelf Availability (OSA)**: `100.0%` (despite blatant empty voids!)
+### The Symptom: Data Frozen Across Every Image
+When we ran the real photos through the dashboard, every single image returned the exact same frozen numbers:
+- **On-Shelf Availability (OSA)**: `100.0%` *(even when shelves were half empty!)*
 - **Planogram Compliance**: `15.4%`
 - **Daily Revenue at Risk**: `$718.56`
-- **Bounding Boxes Drawn on Ceiling Lights and Wall Signs!**
+- **Bounding boxes drawn directly over ceiling lights and wall signs!**
 
 ```
                The Anatomy of the Heuristic Failure
   ┌─────────────────────────────────────────────────────────┐
   │  1. is_foreground = (gray_slice < 215)                  │
-  │     - Synthetic cooler had bright white back wall (235).│
-  │     - Real shelves have dark pegboard/shadows (~40).    │
+  │     - Synthetic rack had white back wall (~235).        │
+  │     - Real shelves have dark pegboards/shadows (~40).   │
   │     - Result: is_foreground was TRUE everywhere.        │
   └───────────────────────────┬─────────────────────────────┘
                               ▼
@@ -118,28 +120,28 @@ Across every real-world image, the dashboard displayed identical numbers:
   └─────────────────────────────────────────────────────────┘
 ```
 
-### The Technical Root Causes:
+### The Deep Technical Root Causes:
 1. **The Inverted Background Threshold**:
-   In `facing_detector.py`, the code checked:
+   In `facing_detector.py`:
    ```python
    # Background wall is light off-white (mean ~ 230-240)
    is_foreground = (gray_slice < 215)
    ```
-   In real supermarkets, shelf backing is dark perforated pegboard, brushed metal, or shadowed wire racks (`luminance ~ 40 to 70`). `is_foreground` evaluated to `True` across the **entire shelf width**. The algorithm merged the entire shelf into a single contiguous block and sliced it into 8 dummy boxes with **0 px gap** between them.
+   In real supermarkets, the backing behind products is dark grey metal, pegboard, or shadow (`luminance ~ 40 to 70`). `is_foreground` evaluated to `True` across the **entire shelf width**. The code grouped the entire row into a single block and sliced it into 8 contiguous dummy boxes with **0 px gap** between them.
 2. **Zero Voids Detected**:
-   Because the inter-facing gap was 0 px, `oos_detector.py` found zero voids. By definition:
+   Because the inter-facing gap was 0 px, `oos_detector.py` found zero voids. By formula:
    $$\text{OSA} = \frac{32 \text{ occupied}}{32 \text{ occupied} + 0 \text{ voids}} = 100.0\%$$
-   The system was mathematically blind to empty shelves on real backgrounds!
-3. **Rigid 4-Row Assumption & Ceiling Hallucination**:
-   The segmenter naively carved `height` into 4 equal bands starting from `y=40`. On wide store shots (Speedway), the cooler doors didn't begin until $y=295$. The algorithm drew Row 0 and Row 1 over the **ceiling fluorescent lights and wall banners**, labeling light fixtures as "Diet Coke" and "Monster".
+   The system was mathematically blind to stockout voids on dark backgrounds.
+3. **Ceiling Hallucinations**:
+   The segmenter sliced `height` into 4 equal bands starting from `y=40`. On wide store shots (Speedway), the cooler doors didn't begin until $y=295$. The algorithm drew Row 0 and Row 1 over the **ceiling fluorescent lights and wall banners**, labeling light fixtures as "Diet Coke" and "Monster".
 
 ---
 
 ## 4. The Architectural Pivot: Multimodal VLM with OpenAI `gpt-5.4-mini`
 
-The lesson was humbling: **rule-based heuristics work well for constrained lab benches, but real retail environments require semantic understanding.**
+Rule-based heuristics work well for constrained lab benches, but real retail environments require semantic understanding. 
 
-We re-engineered the detection core with **OpenAI `gpt-5.4-mini`** via a dedicated `MultimodalVLMEngine` (`src/retail_shelf/cv/vlm_engine.py`):
+We pivoted to **OpenAI `gpt-5.4-mini`** via a dedicated `MultimodalVLMEngine` (`src/retail_shelf/cv/vlm_engine.py`):
 
 ```mermaid
 graph TD
@@ -174,13 +176,13 @@ We evaluated both OpenAI (`gpt-5.4-mini`) and Google Gemini (`gemini-2.0-flash`)
 
 ---
 
-## 5. Production Engineering on Hugging Face Spaces
+## 5. The Production Engineering Odyssey on Hugging Face Spaces
 
-Deploying this architecture to Hugging Face Spaces (`kprsnt/retail-shelf-intelligence`) presented several non-trivial platform challenges:
+Deploying this architecture to Hugging Face Spaces (`kprsnt/retail-shelf-intelligence`) triggered a gauntlet of platform engineering hurdles:
 
-### 1. The ZeroGPU Requirement on Free Accounts
-Under Hugging Face's platform policies, hosting Gradio Spaces on `cpu-basic` is gated behind paid PRO tiers. However, free personal accounts in good standing can host up to 2 **ZeroGPU (`zero-a10g`)** Spaces.
-- **The Challenge**: ZeroGPU requires decorating a function with `@spaces.GPU`.
+### 1. The ZeroGPU Platform Constraint on Free Accounts
+On Hugging Face, hosting Gradio Spaces on `cpu-basic` is restricted to paid PRO plans. However, free personal accounts can host up to 2 **ZeroGPU (`zero-a10g`)** Spaces.
+- **The Challenge**: ZeroGPU requires decorating an active function with `@spaces.GPU`.
 - **The Solution**: We created a lightweight initialization no-op:
   ```python
   try:
@@ -194,7 +196,7 @@ Under Hugging Face's platform policies, hosting Gradio Spaces on `cpu-basic` is 
   ```
   This allowed the Space to deploy cleanly on `zero-a10g` while running inference without consuming visitor GPU quotas.
 
-### 2. The Gradio 6.x Temporary File Caching Bug
+### 2. The Gradio 6.x Temporary File Caching Crash
 - **The Error**:
   ```text
   gradio.exceptions.ComponentProcessingError: Could not preprocess input component at index 0
@@ -218,7 +220,12 @@ Under Hugging Face's platform policies, hosting Gradio Spaces on `cpu-basic` is 
   ```
 - **The Solution**: OpenAI's newer reasoning and mini models mandate `max_completion_tokens` over `max_tokens`. We updated `vlm_engine.py` to use `max_completion_tokens: 4096` with an automated fallback for legacy endpoints.
 
-### 4. Zero-Friction Security: Removing Keys from the UI
+### 4. The Root Dockerfile Conflict & Git Exit Code 128
+- **The Error**: The Hugging Face builder returned `Job failed with exit code: 128`.
+- **The Root Cause**: The repo contained both `sdk: gradio` in `README.md` and a root `Dockerfile` (which exposed port 8000). The Hugging Face builder detected conflicting build specifications.
+- **The Solution**: We purged the root `Dockerfile` from the Space repo, letting Hugging Face's native Gradio builder manage containerization on port 7860 cleanly.
+
+### 5. Zero-Friction Security: Removing Keys from the UI
 Rather than exposing API key input textboxes with dot-masking on the web interface, we wired the backend to pull `OPENAI_API_KEY` directly from Hugging Face Space Secrets server-side. The UI remains clean, uncluttered, and secure.
 
 ---
@@ -255,22 +262,47 @@ PRIORITIZED ACTION WORKLIST (RANKED BY REVENUE RECOVERY):
 
 ---
 
-## 8. Summary & Key Engineering Takeaways
+## 8. Honest Self-Assessment: Where We Need to Improve
+
+Engineering credibility requires honesty about current limitations. While the system works reliably in production today, several key areas require future improvement:
+
+### 1. The Cloud VLM Privacy vs. Accuracy Tradeoff
+- **The Issue**: Relying on `gpt-5.4-mini` breaks the original "100% On-Prem Zero Cloud Egress" promise. For sensitive enterprise grocery chains, streaming store photos to a third-party API is often a compliance blocker.
+- **The Next Step**: Distill a small open vision-language model (e.g. **Qwen2.5-VL-3B** or **SmolVLM-500M**) using ONNX Runtime or TensorRT-LLM to run locally on store edge hardware under 250ms, achieving VLM accuracy with zero data egress.
+
+### 2. Dynamic Multi-Category Planograms
+- **The Issue**: Our financial correlation engine currently compares detected facings against a single beverage cooler planogram (`POG-BEV-COOLER-01`). When analyzing cereal or deodorants, compliance registers as 0.0%.
+- **The Next Step**: Ingest enterprise planograms dynamically via JSON/XML feeds from retail ERPs (SAP, BlueYonder, Symphony RetailAI) matching the detected category automatically.
+
+### 3. Specialized Low-Angle Shelf Tag OCR
+- **The Issue**: Price tag reading currently assumes clean shelf lip channels. In real stores, paper labels are wrinkled, angled upward, or obscured by acrylic retainers.
+- **The Next Step**: Train a specialized high-resolution text detector (CRAFT + PP-OCRv4) dedicated solely to retail price label strips.
+
+### 4. Continuous RTSP Stream Tracking
+- **The Issue**: Single-frame photos cannot distinguish between a customer temporarily removing a box versus an actual inventory depletion.
+- **The Next Step**: Integrate ByteTrack / DeepSORT over continuous 5 FPS store camera streams to confirm persistent stockouts before alerting floor staff.
+
+---
+
+## 9. Summary & Key Engineering Takeaways
 
 ```
 +-------------------------------------------------------------------------------+
 |                    WHAT WE LEARNED BUILDING RETAIL INTELLIGENCE               |
 +-------------------------------------------------------------------------------+
-| 1. Toy Heuristics Collapse on Clutter: Contrast slicing works on synthetic    |
+| 1. The Power of Gemini 3.8 Flash + OMP: Tackling complex CV failures, cloud   |
+|    APIs, platform quirks, and UI redesigns in 1.5 hours is a new paradigm.    |
+|                                                                               |
+| 2. Toy Heuristics Collapse on Clutter: Contrast slicing works on synthetic    |
 |    racks with white back walls, but fails on dark pegboard and wide angles.   |
 |                                                                               |
-| 2. VLMs Bring Semantic Spatial Reasoning: gpt-5.4-mini doesn't just read logos;|
+| 3. VLMs Bring Semantic Spatial Reasoning: gpt-5.4-mini doesn't just read logos;|
 |    it understands the spatial concept of a "shelf" vs "ceiling".             |
 |                                                                               |
-| 3. Zero-Friction Coupling: Converting VLM JSON outputs directly into existing  |
+| 4. Zero-Friction Coupling: Converting VLM JSON outputs directly into existing  |
 |    downstream POS analytics and store ops agents creates a unified platform. |
 |                                                                               |
-| 4. Production Means Resilience: Handling platform quirks (ZeroGPU, Gradio 6   |
+| 5. Production Means Resilience: Handling platform quirks (ZeroGPU, Gradio 6   |
 |    file caching, OpenAI parameter shifts) separates prototypes from software. |
 +-------------------------------------------------------------------------------+
 ```
@@ -278,6 +310,7 @@ PRIORITIZED ACTION WORKLIST (RANKED BY REVENUE RECOVERY):
 ---
 
 *Built with Python 3.11, FastAPI, OpenAI GPT-5.4-mini, Gradio 6, and Hugging Face ZeroGPU.*  
+*Paired with Google Gemini 3.8 Flash on OMP (Oh My Pi).*  
 *Live Hugging Face Space: [huggingface.co/spaces/kprsnt/retail-shelf-intelligence](https://huggingface.co/spaces/kprsnt/retail-shelf-intelligence)*  
 *Direct Web App: [kprsnt-retail-shelf-intelligence.hf.space](https://kprsnt-retail-shelf-intelligence.hf.space)*  
 *GitHub Repository: [github.com/kprsnt2/retail_shelf_intelligence](https://github.com/kprsnt2/retail_shelf_intelligence)*  
