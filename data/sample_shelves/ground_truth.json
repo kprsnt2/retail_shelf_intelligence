@@ -1,0 +1,2427 @@
+{
+  "scenes": [
+    {
+      "shelf_id": "SHELF-BEV-01",
+      "planogram_id": "POG-BEV-COOLER-01",
+      "filename": "beverages_shelf_01.png",
+      "image_width": 1200,
+      "image_height": 900,
+      "title": "Beverage Cooler A3 - Peak Hour (OOS on Eye Level)",
+      "rows": [
+        {
+          "row_index": 0,
+          "row_level": "top",
+          "y_min": 70,
+          "y_max": 250
+        },
+        {
+          "row_index": 1,
+          "row_level": "eye_level",
+          "y_min": 260,
+          "y_max": 440
+        },
+        {
+          "row_index": 2,
+          "row_level": "reach",
+          "y_min": 450,
+          "y_max": 630
+        },
+        {
+          "row_index": 3,
+          "row_level": "bottom",
+          "y_min": 640,
+          "y_max": 820
+        }
+      ],
+      "facings": [
+        {
+          "id": "F_R0_0",
+          "sku_id": "SKU-BEV-007",
+          "brand": "San Pellegrino",
+          "product_name": "San Pellegrino Sparkling Mineral 500ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            86,
+            94,
+            247,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              147,
+              230,
+              197,
+              246
+            ],
+            "displayed_price": 2.49
+          }
+        },
+        {
+          "id": "F_R0_1",
+          "sku_id": "SKU-BEV-007",
+          "brand": "San Pellegrino",
+          "product_name": "San Pellegrino Sparkling Mineral 500ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            259,
+            94,
+            420,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              320,
+              230,
+              370,
+              246
+            ],
+            "displayed_price": 2.49
+          }
+        },
+        {
+          "id": "F_R0_2",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            432,
+            94,
+            593,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              493,
+              230,
+              543,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R0_3",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            605,
+            94,
+            766,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              666,
+              230,
+              716,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R0_4",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            778,
+            94,
+            939,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              839,
+              230,
+              889,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R1_0",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            86,
+            284,
+            204,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              126,
+              420,
+              176,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_1",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            216,
+            284,
+            334,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              256,
+              420,
+              306,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_4",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            606,
+            284,
+            724,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              646,
+              420,
+              696,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_5",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            736,
+            284,
+            854,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              776,
+              420,
+              826,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_6",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            866,
+            284,
+            984,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              906,
+              420,
+              956,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_7",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            996,
+            284,
+            1114,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              1036,
+              420,
+              1086,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R2_0",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            86,
+            474,
+            204,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              126,
+              610,
+              176,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_1",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            216,
+            474,
+            334,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              256,
+              610,
+              306,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_2",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            346,
+            474,
+            464,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              386,
+              610,
+              436,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_3",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            476,
+            474,
+            594,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              516,
+              610,
+              566,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_5",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            736,
+            474,
+            854,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              776,
+              610,
+              826,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_6",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            866,
+            474,
+            984,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              906,
+              610,
+              956,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_7",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            996,
+            474,
+            1114,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              1036,
+              610,
+              1086,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R3_0",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            86,
+            664,
+            247,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              147,
+              800,
+              197,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_1",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            259,
+            664,
+            420,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              320,
+              800,
+              370,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_2",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            432,
+            664,
+            593,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              493,
+              800,
+              543,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_3",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            605,
+            664,
+            766,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              666,
+              800,
+              716,
+              816
+            ],
+            "displayed_price": 0.69
+          }
+        },
+        {
+          "id": "F_R3_4",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            778,
+            664,
+            939,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              839,
+              800,
+              889,
+              816
+            ],
+            "displayed_price": 0.69
+          }
+        },
+        {
+          "id": "F_R3_5",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            951,
+            664,
+            1112,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              1012,
+              800,
+              1062,
+              816
+            ],
+            "displayed_price": 0.69
+          }
+        }
+      ],
+      "voids": [
+        {
+          "id": "VOID_R0_5",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            951,
+            94,
+            1112,
+            226
+          ],
+          "expected_sku_id": "SKU-BEV-003"
+        },
+        {
+          "id": "VOID_R1_2",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            346,
+            284,
+            464,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R1_3",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            476,
+            284,
+            594,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R2_4",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            606,
+            474,
+            724,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-004"
+        }
+      ],
+      "tags": [
+        {
+          "sku_id": "SKU-BEV-007",
+          "row_index": 0,
+          "displayed_price": 2.49,
+          "bbox": [
+            147,
+            230,
+            197,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-007",
+          "row_index": 0,
+          "displayed_price": 2.49,
+          "bbox": [
+            320,
+            230,
+            370,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            493,
+            230,
+            543,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            666,
+            230,
+            716,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            839,
+            230,
+            889,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            126,
+            420,
+            176,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            256,
+            420,
+            306,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            646,
+            420,
+            696,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            776,
+            420,
+            826,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            906,
+            420,
+            956,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            1036,
+            420,
+            1086,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            126,
+            610,
+            176,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            256,
+            610,
+            306,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            386,
+            610,
+            436,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            516,
+            610,
+            566,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            776,
+            610,
+            826,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            906,
+            610,
+            956,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            1036,
+            610,
+            1086,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            147,
+            800,
+            197,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            320,
+            800,
+            370,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            493,
+            800,
+            543,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.69,
+          "bbox": [
+            666,
+            800,
+            716,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.69,
+          "bbox": [
+            839,
+            800,
+            889,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.69,
+          "bbox": [
+            1012,
+            800,
+            1062,
+            816
+          ]
+        }
+      ]
+    },
+    {
+      "shelf_id": "SHELF-BEV-02",
+      "planogram_id": "POG-BEV-COOLER-01",
+      "filename": "beverages_shelf_02_compliant.png",
+      "image_width": 1200,
+      "image_height": 900,
+      "title": "Beverage Cooler A3 - Fully Restocked (100% Compliant)",
+      "rows": [
+        {
+          "row_index": 0,
+          "row_level": "top",
+          "y_min": 70,
+          "y_max": 250
+        },
+        {
+          "row_index": 1,
+          "row_level": "eye_level",
+          "y_min": 260,
+          "y_max": 440
+        },
+        {
+          "row_index": 2,
+          "row_level": "reach",
+          "y_min": 450,
+          "y_max": 630
+        },
+        {
+          "row_index": 3,
+          "row_level": "bottom",
+          "y_min": 640,
+          "y_max": 820
+        }
+      ],
+      "facings": [
+        {
+          "id": "F_R0_0",
+          "sku_id": "SKU-BEV-007",
+          "brand": "San Pellegrino",
+          "product_name": "San Pellegrino Sparkling Mineral 500ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            86,
+            94,
+            247,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              147,
+              230,
+              197,
+              246
+            ],
+            "displayed_price": 2.49
+          }
+        },
+        {
+          "id": "F_R0_1",
+          "sku_id": "SKU-BEV-007",
+          "brand": "San Pellegrino",
+          "product_name": "San Pellegrino Sparkling Mineral 500ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            259,
+            94,
+            420,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              320,
+              230,
+              370,
+              246
+            ],
+            "displayed_price": 2.49
+          }
+        },
+        {
+          "id": "F_R0_2",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            432,
+            94,
+            593,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              493,
+              230,
+              543,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R0_3",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            605,
+            94,
+            766,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              666,
+              230,
+              716,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R0_4",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            778,
+            94,
+            939,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              839,
+              230,
+              889,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R0_5",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            951,
+            94,
+            1112,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              1012,
+              230,
+              1062,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R1_0",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            86,
+            284,
+            204,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              126,
+              420,
+              176,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_1",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            216,
+            284,
+            334,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              256,
+              420,
+              306,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_2",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            346,
+            284,
+            464,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              386,
+              420,
+              436,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_3",
+          "sku_id": "SKU-BEV-001",
+          "brand": "Red Bull",
+          "product_name": "Red Bull Energy Drink 250ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            476,
+            284,
+            594,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              516,
+              420,
+              566,
+              436
+            ],
+            "displayed_price": 2.99
+          }
+        },
+        {
+          "id": "F_R1_4",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            606,
+            284,
+            724,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              646,
+              420,
+              696,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_5",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            736,
+            284,
+            854,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              776,
+              420,
+              826,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_6",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            866,
+            284,
+            984,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              906,
+              420,
+              956,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R1_7",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            996,
+            284,
+            1114,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              1036,
+              420,
+              1086,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R2_0",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            86,
+            474,
+            204,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              126,
+              610,
+              176,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_1",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            216,
+            474,
+            334,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              256,
+              610,
+              306,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_2",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            346,
+            474,
+            464,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              386,
+              610,
+              436,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_3",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            476,
+            474,
+            594,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              516,
+              610,
+              566,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_4",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            606,
+            474,
+            724,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              646,
+              610,
+              696,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_5",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            736,
+            474,
+            854,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              776,
+              610,
+              826,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_6",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            866,
+            474,
+            984,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              906,
+              610,
+              956,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_7",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            996,
+            474,
+            1114,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              1036,
+              610,
+              1086,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R3_0",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            86,
+            664,
+            282,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              165,
+              800,
+              215,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_1",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            294,
+            664,
+            490,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              373,
+              800,
+              423,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_2",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            502,
+            664,
+            698,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              581,
+              800,
+              631,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_3",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            710,
+            664,
+            906,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              789,
+              800,
+              839,
+              816
+            ],
+            "displayed_price": 0.89
+          }
+        },
+        {
+          "id": "F_R3_4",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            918,
+            664,
+            1114,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              997,
+              800,
+              1047,
+              816
+            ],
+            "displayed_price": 0.89
+          }
+        }
+      ],
+      "voids": [],
+      "tags": [
+        {
+          "sku_id": "SKU-BEV-007",
+          "row_index": 0,
+          "displayed_price": 2.49,
+          "bbox": [
+            147,
+            230,
+            197,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-007",
+          "row_index": 0,
+          "displayed_price": 2.49,
+          "bbox": [
+            320,
+            230,
+            370,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            493,
+            230,
+            543,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            666,
+            230,
+            716,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            839,
+            230,
+            889,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            1012,
+            230,
+            1062,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            126,
+            420,
+            176,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            256,
+            420,
+            306,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            386,
+            420,
+            436,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-001",
+          "row_index": 1,
+          "displayed_price": 2.99,
+          "bbox": [
+            516,
+            420,
+            566,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            646,
+            420,
+            696,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            776,
+            420,
+            826,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            906,
+            420,
+            956,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            1036,
+            420,
+            1086,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            126,
+            610,
+            176,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            256,
+            610,
+            306,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            386,
+            610,
+            436,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            516,
+            610,
+            566,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            646,
+            610,
+            696,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            776,
+            610,
+            826,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            906,
+            610,
+            956,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            1036,
+            610,
+            1086,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            165,
+            800,
+            215,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            373,
+            800,
+            423,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            581,
+            800,
+            631,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.89,
+          "bbox": [
+            789,
+            800,
+            839,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.89,
+          "bbox": [
+            997,
+            800,
+            1047,
+            816
+          ]
+        }
+      ]
+    },
+    {
+      "shelf_id": "SHELF-BEV-03",
+      "planogram_id": "POG-BEV-COOLER-01",
+      "filename": "beverages_shelf_03_depleted.png",
+      "image_width": 1200,
+      "image_height": 900,
+      "title": "Beverage Cooler A3 - Critical Stockout Crisis",
+      "rows": [
+        {
+          "row_index": 0,
+          "row_level": "top",
+          "y_min": 70,
+          "y_max": 250
+        },
+        {
+          "row_index": 1,
+          "row_level": "eye_level",
+          "y_min": 260,
+          "y_max": 440
+        },
+        {
+          "row_index": 2,
+          "row_level": "reach",
+          "y_min": 450,
+          "y_max": 630
+        },
+        {
+          "row_index": 3,
+          "row_level": "bottom",
+          "y_min": 640,
+          "y_max": 820
+        }
+      ],
+      "facings": [
+        {
+          "id": "F_R0_0",
+          "sku_id": "SKU-BEV-007",
+          "brand": "San Pellegrino",
+          "product_name": "San Pellegrino Sparkling Mineral 500ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            86,
+            94,
+            247,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              147,
+              230,
+              197,
+              246
+            ],
+            "displayed_price": 2.49
+          }
+        },
+        {
+          "id": "F_R0_3",
+          "sku_id": "SKU-BEV-003",
+          "brand": "Celsius",
+          "product_name": "Celsius Live Fit Sparkling Orange 355ml",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            605,
+            94,
+            766,
+            226
+          ],
+          "price_tag": {
+            "bbox": [
+              666,
+              230,
+              716,
+              246
+            ],
+            "displayed_price": 3.49
+          }
+        },
+        {
+          "id": "F_R1_4",
+          "sku_id": "SKU-BEV-002",
+          "brand": "Monster",
+          "product_name": "Monster Energy Original 500ml",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            606,
+            284,
+            724,
+            416
+          ],
+          "price_tag": {
+            "bbox": [
+              646,
+              420,
+              696,
+              436
+            ],
+            "displayed_price": 3.29
+          }
+        },
+        {
+          "id": "F_R2_0",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            86,
+            474,
+            204,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              126,
+              610,
+              176,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_1",
+          "sku_id": "SKU-BEV-004",
+          "brand": "Coca-Cola",
+          "product_name": "Coca-Cola Original Taste 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            216,
+            474,
+            334,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              256,
+              610,
+              306,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R2_5",
+          "sku_id": "SKU-BEV-005",
+          "brand": "Coca-Cola",
+          "product_name": "Diet Coke No Sugar 330ml Can",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            736,
+            474,
+            854,
+            606
+          ],
+          "price_tag": {
+            "bbox": [
+              776,
+              610,
+              826,
+              626
+            ],
+            "displayed_price": 1.79
+          }
+        },
+        {
+          "id": "F_R3_0",
+          "sku_id": "SKU-BEV-006",
+          "brand": "PepsiCo",
+          "product_name": "Pepsi Max Zero Sugar 330ml Can",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            86,
+            664,
+            282,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              165,
+              800,
+              215,
+              816
+            ],
+            "displayed_price": 1.69
+          }
+        },
+        {
+          "id": "F_R3_3",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            710,
+            664,
+            906,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              789,
+              800,
+              839,
+              816
+            ],
+            "displayed_price": 0.89
+          }
+        },
+        {
+          "id": "F_R3_4",
+          "sku_id": "SKU-BEV-008",
+          "brand": "StoreBrand",
+          "product_name": "Store Brand Value Cola 330ml",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            918,
+            664,
+            1114,
+            796
+          ],
+          "price_tag": {
+            "bbox": [
+              997,
+              800,
+              1047,
+              816
+            ],
+            "displayed_price": 0.89
+          }
+        }
+      ],
+      "voids": [
+        {
+          "id": "VOID_R0_1",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            259,
+            94,
+            420,
+            226
+          ],
+          "expected_sku_id": "SKU-BEV-007"
+        },
+        {
+          "id": "VOID_R0_2",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            432,
+            94,
+            593,
+            226
+          ],
+          "expected_sku_id": "SKU-BEV-007"
+        },
+        {
+          "id": "VOID_R0_4",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            778,
+            94,
+            939,
+            226
+          ],
+          "expected_sku_id": "SKU-BEV-003"
+        },
+        {
+          "id": "VOID_R0_5",
+          "row_index": 0,
+          "row_level": "top",
+          "bbox": [
+            951,
+            94,
+            1112,
+            226
+          ],
+          "expected_sku_id": "SKU-BEV-003"
+        },
+        {
+          "id": "VOID_R1_0",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            86,
+            284,
+            204,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R1_1",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            216,
+            284,
+            334,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R1_2",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            346,
+            284,
+            464,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R1_3",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            476,
+            284,
+            594,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-001"
+        },
+        {
+          "id": "VOID_R1_5",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            736,
+            284,
+            854,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-002"
+        },
+        {
+          "id": "VOID_R1_6",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            866,
+            284,
+            984,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-002"
+        },
+        {
+          "id": "VOID_R1_7",
+          "row_index": 1,
+          "row_level": "eye_level",
+          "bbox": [
+            996,
+            284,
+            1114,
+            416
+          ],
+          "expected_sku_id": "SKU-BEV-002"
+        },
+        {
+          "id": "VOID_R2_2",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            346,
+            474,
+            464,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-004"
+        },
+        {
+          "id": "VOID_R2_3",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            476,
+            474,
+            594,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-004"
+        },
+        {
+          "id": "VOID_R2_4",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            606,
+            474,
+            724,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-004"
+        },
+        {
+          "id": "VOID_R2_6",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            866,
+            474,
+            984,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-005"
+        },
+        {
+          "id": "VOID_R2_7",
+          "row_index": 2,
+          "row_level": "reach",
+          "bbox": [
+            996,
+            474,
+            1114,
+            606
+          ],
+          "expected_sku_id": "SKU-BEV-005"
+        },
+        {
+          "id": "VOID_R3_1",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            294,
+            664,
+            490,
+            796
+          ],
+          "expected_sku_id": "SKU-BEV-006"
+        },
+        {
+          "id": "VOID_R3_2",
+          "row_index": 3,
+          "row_level": "bottom",
+          "bbox": [
+            502,
+            664,
+            698,
+            796
+          ],
+          "expected_sku_id": "SKU-BEV-006"
+        }
+      ],
+      "tags": [
+        {
+          "sku_id": "SKU-BEV-007",
+          "row_index": 0,
+          "displayed_price": 2.49,
+          "bbox": [
+            147,
+            230,
+            197,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-003",
+          "row_index": 0,
+          "displayed_price": 3.49,
+          "bbox": [
+            666,
+            230,
+            716,
+            246
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-002",
+          "row_index": 1,
+          "displayed_price": 3.29,
+          "bbox": [
+            646,
+            420,
+            696,
+            436
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            126,
+            610,
+            176,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-004",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            256,
+            610,
+            306,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-005",
+          "row_index": 2,
+          "displayed_price": 1.79,
+          "bbox": [
+            776,
+            610,
+            826,
+            626
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-006",
+          "row_index": 3,
+          "displayed_price": 1.69,
+          "bbox": [
+            165,
+            800,
+            215,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.89,
+          "bbox": [
+            789,
+            800,
+            839,
+            816
+          ]
+        },
+        {
+          "sku_id": "SKU-BEV-008",
+          "row_index": 3,
+          "displayed_price": 0.89,
+          "bbox": [
+            997,
+            800,
+            1047,
+            816
+          ]
+        }
+      ]
+    }
+  ]
+}

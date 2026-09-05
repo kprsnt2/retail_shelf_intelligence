@@ -1,0 +1,44 @@
+{
+  "planograms": [
+    {
+      "planogram_id": "POG-BEV-COOLER-01",
+      "shelf_name": "Main Beverage Cooler A3",
+      "category": "Beverages",
+      "total_rows": 4,
+      "rows": [
+        {
+          "row_index": 0,
+          "row_level": "top",
+          "slots": [
+            { "slot_index": 0, "expected_sku_id": "SKU-BEV-007", "expected_facings": 2 },
+            { "slot_index": 1, "expected_sku_id": "SKU-BEV-003", "expected_facings": 3 }
+          ]
+        },
+        {
+          "row_index": 1,
+          "row_level": "eye_level",
+          "slots": [
+            { "slot_index": 0, "expected_sku_id": "SKU-BEV-001", "expected_facings": 4 },
+            { "slot_index": 1, "expected_sku_id": "SKU-BEV-002", "expected_facings": 4 }
+          ]
+        },
+        {
+          "row_index": 2,
+          "row_level": "reach",
+          "slots": [
+            { "slot_index": 0, "expected_sku_id": "SKU-BEV-004", "expected_facings": 5 },
+            { "slot_index": 1, "expected_sku_id": "SKU-BEV-005", "expected_facings": 3 }
+          ]
+        },
+        {
+          "row_index": 3,
+          "row_level": "bottom",
+          "slots": [
+            { "slot_index": 0, "expected_sku_id": "SKU-BEV-006", "expected_facings": 3 },
+            { "slot_index": 1, "expected_sku_id": "SKU-BEV-008", "expected_facings": 2 }
+          ]
+        }
+      ]
+    }
+  ]
+}

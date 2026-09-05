@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail Intelligence — Deepwork Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-section">
+        <span class="brand-title">Deepwork Labs</span>
+        <span class="badge-tag">● PRODUCT · RETAIL INTELLIGENCE</span>
+      </div>
+      <div class="header-status">
+        <span class="badge-tag badge-green">ON-PREM LOCAL INFERENCE</span>
+        <div class="status-indicator">
+          <span class="dot"></span>
+          <span>DATA SOVEREIGN · ZERO CLOUD EGRESS</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main class="main-layout">
+    
+    <!-- Left Column: Visual Shelf Viewer & Controls -->
+    <section class="visual-section">
+      
+      <!-- Controls -->
+      <div class="control-bar">
+        <div class="control-group">
+          <label class="control-label" for="sceneSelector">Shelf Scene:</label>
+          <select id="sceneSelector" class="select-input">
+            <option value="beverages_shelf_01.png">Beverage Cooler A3 - Peak Hour (OOS on Eye Level)</option>
+            <option value="beverages_shelf_02_compliant.png">Beverage Cooler A3 - Fully Restocked (100% Compliant)</option>
+            <option value="beverages_shelf_03_depleted.png">Beverage Cooler A3 - Critical Stockout Crisis</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">Upload Custom:</label>
+          <input type="file" id="fileUpload" accept="image/*" style="display: none;">
+          <button class="btn btn-secondary" onclick="document.getElementById('fileUpload').click()">Choose Photo</button>
+        </div>
+
+        <button class="btn" id="runScanBtn">Rescan Shelf</button>
+      </div>
+
+      <!-- Canvas Card -->
+      <div class="viewer-card">
+        <div class="viewer-header">
+          <span class="section-tag">[ 01 ] · DETECT — COMPUTER VISION BBOX OVERLAYS</span>
+          <div class="filter-toggles">
+            <button class="toggle-btn active" data-filter="all">All</button>
+            <button class="toggle-btn" data-filter="products">Products</button>
+            <button class="toggle-btn" data-filter="voids">Voids (OOS)</button>
+            <button class="toggle-btn" data-filter="tags">Price Tags</button>
+          </div>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="shelfCanvas" width="1200" height="900"></canvas>
+          <div id="facingTooltip"></div>
+        </div>
+
+        <div class="canvas-legend">
+          <div class="legend-item">
+            <div class="legend-swatch" style="background: #1b8a5a;"></div>
+            <span>Detected Product Facing</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-swatch" style="background: #d0342c;"></div>
+            <span>Out-of-Stock (OOS) Void</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-swatch" style="background: #cf7c12;"></div>
+            <span>Price Tag Discrepancy</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right Column: Telemetry, Worklist & Analytics -->
+    <aside class="analytics-panel">
+      
+      <!-- Telemetry KPIs -->
+      <div class="telemetry-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">On-Shelf Availability</div>
+          <div class="kpi-value" id="kpiOSA">--%</div>
+          <div class="kpi-subtext" id="kpiSlotsCount">-- slots occupied</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Planogram Compliance</div>
+          <div class="kpi-value" id="kpiPOG">--%</div>
+          <div class="kpi-subtext">Target vs Actual facings</div>
+        </div>
+        <div class="kpi-card kpi-danger">
+          <div class="kpi-title">Revenue At Risk</div>
+          <div class="kpi-value" id="kpiRevDaily">$0.00</div>
+          <div class="kpi-subtext" id="kpiRevWeekly">$0.00 / week</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Scan Latency</div>
+          <div class="kpi-value" id="kpiLatency">-- ms</div>
+          <div class="kpi-subtext">Local On-Prem CPU</div>
+        </div>
+      </div>
+
+      <!-- Action Tabs -->
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="worklist">The Store, Prioritized</button>
+          <button class="tab-btn" data-tab="analytics">Revenue & Analytics</button>
+          <button class="tab-btn" data-tab="evals">Evals & Benchmarks</button>
+        </div>
+
+        <!-- Tab 1: Prioritized Worklist -->
+        <div class="tab-content active" id="tabWorklist">
+          <div class="worklist-brief" id="worklistBrief">Analyzing shelf scan...</div>
+          <div id="actionsContainer">
+            <!-- Dynamically injected action cards -->
+          </div>
+          <div style="margin-top: 1rem; text-align: right;">
+            <button class="btn btn-secondary" id="exportReportBtn">Download Audit Report (.txt)</button>
+          </div>
+        </div>
+
+        <!-- Tab 2: Financial Analytics -->
+        <div class="tab-content" id="tabAnalytics">
+          <h4 style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.75rem; text-transform: uppercase;">Share of Shelf (Brand Distribution)</h4>
+          <div id="sosContainer" style="margin-bottom: 1.5rem;"></div>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.75rem; text-transform: uppercase;">Eye-Level Efficiency Rating</h4>
+          <div id="eyeLevelContainer" style="background: var(--bg-card-alt); padding: 0.85rem; border-radius: 4px; font-size: 0.82rem; margin-bottom: 1.5rem;"></div>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.75rem; text-transform: uppercase;">Price Tag Audits</h4>
+          <div id="priceAuditContainer"></div>
+        </div>
+
+        <!-- Tab 3: Model Evals & Benchmarks -->
+        <div class="tab-content" id="tabEvals">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4 style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;">CV Pipeline Precision & Latency</h4>
+            <button class="btn" id="runBenchmarkBtn" style="font-size: 0.72rem; padding: 0.3rem 0.7rem;">Run Benchmarks</button>
+          </div>
+          <div id="evalsContainer">
+            <table class="eval-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Observed</th>
+                  <th>Threshold</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="evalMetricsTbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+
+            <h4 style="font-family: var(--font-mono); font-size: 0.8rem; margin: 1.25rem 0 0.6rem; text-transform: uppercase;">On-Prem vs Cloud VLM Tradeoff</h4>
+            <table class="eval-table">
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>On-Prem Pipeline</th>
+                  <th>Cloud VLM (GPT-4o)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Data Sovereignty</td>
+                  <td class="pass-badge">100% In-Building</td>
+                  <td>Egressed to Cloud</td>
+                </tr>
+                <tr>
+                  <td>Inference Latency</td>
+                  <td class="pass-badge">< 120 ms</td>
+                  <td>5,000 - 8,000 ms</td>
+                </tr>
+                <tr>
+                  <td>Per-1K Scan Cost</td>
+                  <td class="pass-badge">$0.00</td>
+                  <td>~$30.00</td>
+                </tr>
+                <tr>
+                  <td>Offline Operation</td>
+                  <td class="pass-badge">Full Resilient</td>
+                  <td>Halted on Outage</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

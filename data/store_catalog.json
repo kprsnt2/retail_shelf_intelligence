@@ -1,0 +1,100 @@
+{
+  "skus": [
+    {
+      "sku_id": "SKU-BEV-001",
+      "name": "Red Bull Energy Drink 250ml",
+      "brand": "Red Bull",
+      "category": "Energy Drinks",
+      "barcode": "9002490100070",
+      "pos_price": 2.99,
+      "unit_cost": 1.45,
+      "avg_daily_velocity": 48.5,
+      "stock_on_hand": 120,
+      "target_facings": 4
+    },
+    {
+      "sku_id": "SKU-BEV-002",
+      "name": "Monster Energy Original 500ml",
+      "brand": "Monster",
+      "category": "Energy Drinks",
+      "barcode": "070847811169",
+      "pos_price": 3.29,
+      "unit_cost": 1.60,
+      "avg_daily_velocity": 42.0,
+      "stock_on_hand": 95,
+      "target_facings": 4
+    },
+    {
+      "sku_id": "SKU-BEV-003",
+      "name": "Celsius Live Fit Sparkling Orange 355ml",
+      "brand": "Celsius",
+      "category": "Energy Drinks",
+      "barcode": "889392000213",
+      "pos_price": 3.49,
+      "unit_cost": 1.70,
+      "avg_daily_velocity": 36.2,
+      "stock_on_hand": 60,
+      "target_facings": 3
+    },
+    {
+      "sku_id": "SKU-BEV-004",
+      "name": "Coca-Cola Original Taste 330ml Can",
+      "brand": "Coca-Cola",
+      "category": "Carbonated Soft Drinks",
+      "barcode": "5449000000996",
+      "pos_price": 1.79,
+      "unit_cost": 0.65,
+      "avg_daily_velocity": 65.0,
+      "stock_on_hand": 240,
+      "target_facings": 5
+    },
+    {
+      "sku_id": "SKU-BEV-005",
+      "name": "Diet Coke No Sugar 330ml Can",
+      "brand": "Coca-Cola",
+      "category": "Carbonated Soft Drinks",
+      "barcode": "5449000009418",
+      "pos_price": 1.79,
+      "unit_cost": 0.65,
+      "avg_daily_velocity": 38.0,
+      "stock_on_hand": 150,
+      "target_facings": 3
+    },
+    {
+      "sku_id": "SKU-BEV-006",
+      "name": "Pepsi Max Zero Sugar 330ml Can",
+      "brand": "PepsiCo",
+      "category": "Carbonated Soft Drinks",
+      "barcode": "4060800104712",
+      "pos_price": 1.69,
+      "unit_cost": 0.60,
+      "avg_daily_velocity": 28.5,
+      "stock_on_hand": 110,
+      "target_facings": 3
+    },
+    {
+      "sku_id": "SKU-BEV-007",
+      "name": "San Pellegrino Sparkling Mineral 500ml",
+      "brand": "San Pellegrino",
+      "category": "Sparkling Water",
+      "barcode": "8002270014901",
+      "pos_price": 2.49,
+      "unit_cost": 1.05,
+      "avg_daily_velocity": 22.0,
+      "stock_on_hand": 85,
+      "target_facings": 2
+    },
+    {
+      "sku_id": "SKU-BEV-008",
+      "name": "Store Brand Value Cola 330ml",
+      "brand": "StoreBrand",
+      "category": "Carbonated Soft Drinks",
+      "barcode": "999000111222",
+      "pos_price": 0.89,
+      "unit_cost": 0.40,
+      "avg_daily_velocity": 8.5,
+      "stock_on_hand": 180,
+      "target_facings": 2
+    }
+  ]
+}
