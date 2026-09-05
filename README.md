@@ -1,3 +1,15 @@
+---
+title: Retail Shelf Intelligence
+emoji: 🛒
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 6.26.0
+app_file: app.py
+short_description: Edge CV & Agentic Commerce for On-Prem Shelves
+pinned: false
+---
+
 # Retail Shelf Intelligence — On-Prem Edge CV & Agentic Commerce
 
 > **Built for Deepwork Labs** (`dwlabs.org/retail-intelligence`)  
@@ -166,5 +178,5 @@ retail-shelf-intelligence/
 ## 👤 Author
 **Prashanth K**  
 - Portfolio: [kprsnt.in](https://kprsnt.in)  
-- GitHub: [github.com/kprsnt2](https://github.com/kprsnt2)  
-- X / Twitter: [@kprsnt](https://x.com/kprsnt)
+- GitHub: [github.com/kprsnt2](https://github.com/kprsnt2)
+- X / Twitter: [@prashanth_29](https://x.com/prashanth_29)

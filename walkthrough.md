@@ -1,7 +1,7 @@
 # Retail Shelf Intelligence — Walkthrough & Live Deployment Guide
 
 > **Prototype for Deepwork Labs** (`dwlabs.org/retail-intelligence`)  
-> **Author:** Prashanth K ([kprsnt.in](https://kprsnt.in) | [@kprsnt](https://x.com/kprsnt))
+> **Author:** Prashanth K ([kprsnt.in](https://kprsnt.in) | [@prashanth_29](https://x.com/prashanth_29))
 
 ---
 

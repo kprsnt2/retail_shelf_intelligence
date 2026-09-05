@@ -1,6 +1,6 @@
 # Retail Intelligence CV Pipeline: Benchmark & Evaluation Report
 
-**Generated:** 2026-09-05 06:27:41 UTC  
+**Generated:** 2026-09-05 06:43:22 UTC  
 **Deployment Mode:** On-Prem Edge Inference (Zero Cloud Dependency)  
 
 ---
@@ -20,13 +20,13 @@
 
 ## 2. Latency & Throughput Benchmark
 
-*Benchmarked on local CPU across 5 continuous shelf scans:*
+*Benchmarked on local CPU across 1 continuous shelf scans:*
 
-- **Mean Latency:** `89.02 ms`
-- **P50 Latency:** `87.51 ms`
-- **P95 Latency:** `94.93 ms`
-- **P99 Latency:** `95.9 ms`
-- **Throughput:** `~11.2 shelf scans / sec`
+- **Mean Latency:** `132.88 ms`
+- **P50 Latency:** `132.88 ms`
+- **P95 Latency:** `132.88 ms`
+- **P99 Latency:** `132.88 ms`
+- **Throughput:** `~7.5 shelf scans / sec`
 
 ---
 
