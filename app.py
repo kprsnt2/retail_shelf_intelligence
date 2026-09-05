@@ -49,6 +49,8 @@ SAMPLE_IMAGES = {
     "Beverage Cooler A3 - Peak Hour (OOS on Eye Level)": SAMPLE_DIR / "beverages_shelf_01.png",
     "Beverage Cooler A3 - Fully Restocked (100% Compliant)": SAMPLE_DIR / "beverages_shelf_02_compliant.png",
     "Beverage Cooler A3 - Critical Stockout Crisis": SAMPLE_DIR / "beverages_shelf_03_depleted.png",
+    "Real Supermarket Drinks Aisle (Woolworths)": SAMPLE_DIR / "real_beverage_shelf_01.jpg",
+    "Real Convenience Store Beverage Cooler (Speedway)": SAMPLE_DIR / "real_speedway_cooler.jpg",
 }
 
 def annotate_shelf(

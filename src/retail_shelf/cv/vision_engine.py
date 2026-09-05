@@ -35,10 +35,14 @@ class UnifiedVisionEngine:
         """Run complete on-prem computer vision pipeline on a shelf image."""
         start_time = time.perf_counter()
         
-        width, height = image.size
+        orig_width, orig_height = image.size
+        CANONICAL_W, CANONICAL_H = 1200, 900
+        needs_scaling = (orig_width != CANONICAL_W or orig_height != CANONICAL_H)
+        
+        proc_image = image.resize((CANONICAL_W, CANONICAL_H), Image.Resampling.BILINEAR) if needs_scaling else image
         
         # 1. Segment shelf into horizontal rows
-        rows: List[RowSegment] = self.segmenter.segment_rows(image)
+        rows: List[RowSegment] = self.segmenter.segment_rows(proc_image)
         
         total_occupied = 0
         total_voids = 0
@@ -46,11 +50,11 @@ class UnifiedVisionEngine:
         # 2. Process each row for facings, voids, and price tags
         for row in rows:
             # Detect product facings
-            facings = self.facing_detector.detect_facings_in_row(image, row)
+            facings = self.facing_detector.detect_facings_in_row(proc_image, row)
             # Detect price tags
-            self.tag_reader.detect_tags_in_row(image, row, facings)
+            self.tag_reader.detect_tags_in_row(proc_image, row, facings)
             # Detect empty slots (OOS voids)
-            voids = self.void_detector.detect_voids(image, row, facings)
+            voids = self.void_detector.detect_voids(proc_image, row, facings)
             
             all_slots = facings + voids
             # Sort all slots left-to-right
@@ -64,12 +68,30 @@ class UnifiedVisionEngine:
             total_occupied += len(facings)
             total_voids += len(voids)
             
+        # 3. Project coordinates back to original image scale if normalized
+        if needs_scaling:
+            scale_x = orig_width / float(CANONICAL_W)
+            scale_y = orig_height / float(CANONICAL_H)
+            for row in rows:
+                row.y_min = int(row.y_min * scale_y)
+                row.y_max = int(row.y_max * scale_y)
+                for item in row.facings:
+                    item.bbox.x1 = int(item.bbox.x1 * scale_x)
+                    item.bbox.y1 = int(item.bbox.y1 * scale_y)
+                    item.bbox.x2 = int(item.bbox.x2 * scale_x)
+                    item.bbox.y2 = int(item.bbox.y2 * scale_y)
+                    if item.tag_bbox:
+                        item.tag_bbox.x1 = int(item.tag_bbox.x1 * scale_x)
+                        item.tag_bbox.y1 = int(item.tag_bbox.y1 * scale_y)
+                        item.tag_bbox.x2 = int(item.tag_bbox.x2 * scale_x)
+                        item.tag_bbox.y2 = int(item.tag_bbox.y2 * scale_y)
+
         elapsed_ms = (time.perf_counter() - start_time) * 1000.0
         
         return ShelfDetectionResult(
             image_id=image_id,
-            image_width=width,
-            image_height=height,
+            image_width=orig_width,
+            image_height=orig_height,
             rows=rows,
             total_facings=total_occupied + total_voids,
             occupied_facings=total_occupied,
